@@ -2,9 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Data;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Serialization;
 
 namespace SkiRunRater
@@ -38,7 +35,10 @@ namespace SkiRunRater
 
             using (sReader)
             {
+                // deserialize the XML data set into a generic object
                 object xmlObject = deserializer.Deserialize(sReader);
+
+                // cast the generic object to the list class
                 skiRunsFromFile = (SkiRuns)xmlObject;
             }
 
