@@ -8,6 +8,7 @@ namespace SkiRunRater
 {
     public class DataSettings
     {
-        public const string dataFilePath = "Data\\Data.xml"; 
+        public const string dataFilePath = "Data\\Data.xml";
+        //public const string dataFilePath = "Data\\Data.json";
     }
 }

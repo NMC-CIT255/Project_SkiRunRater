@@ -32,6 +32,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -42,9 +46,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller\Controller.cs" />
+    <Compile Include="DAL\SkiRunRepositoryJSON.cs" />
     <Compile Include="DAL\SkiRunRepositoryXML.cs" />
     <Compile Include="DAL\SkiRunRepositoryCSV.cs" />
     <Compile Include="Data\DataSettings.cs" />
+    <Compile Include="Data\InitializeDataFileJSON.cs" />
     <Compile Include="Data\InitializeDataFileXML.cs" />
     <Compile Include="Data\InitializeDataFileCSV.cs" />
     <Compile Include="Models\AppEnum.cs" />
@@ -61,8 +67,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Data\Data.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <Content Include="Data\Data.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

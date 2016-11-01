@@ -4,11 +4,11 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Xml.Serialization;
+using Newtonsoft.Json;
 
 namespace SkiRunRater
 {
-    public class InitializeDataFileXML
+    public class InitializeDataFileJSON
     {
 
         public static void AddTestData()
@@ -31,19 +31,13 @@ namespace SkiRunRater
         /// <param name="dataFilePath">path to the data file</param>
         public static void WriteAllSkiRuns(List<SkiRun> skiRuns, string dataFilePath)
         {
-            StringWriter strWriter = new StringWriter();
-            XmlSerializer serializer = new XmlSerializer(typeof(List<SkiRun>), new XmlRootAttribute("SkiRuns"));
+            //string jsonObject = JsonConvert.SerializeObject(new { SkiRuns = skiRuns }, Formatting.Indented);
+            string jsonObject = JsonConvert.SerializeObject(skiRuns, Formatting.Indented);
 
-            //StreamWriter sWriter = new StreamWriter(dataFilePath);
-
-            serializer.Serialize(strWriter, skiRuns);
-
-            string xmlObject = strWriter.ToString();
-            
-            using (StreamWriter streamWriter = new StreamWriter(dataFilePath))
+            using (StreamWriter sWriter = new StreamWriter(dataFilePath))
             {
-                streamWriter.Write(xmlObject);
-            }
+                sWriter.Write(jsonObject);
+            }            
         }
     }
 }
