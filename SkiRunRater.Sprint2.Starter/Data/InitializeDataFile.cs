@@ -30,34 +30,23 @@ namespace SkiRunRater
         /// <param name="dataFilePath">path to the data file</param>
         public static void WriteAllSkiRuns(List<SkiRun> skiRuns, string dataFilePath)
         {
-            string skiRunString;
+            string csvText;
+            StringBuilder sb = new StringBuilder();
+            sb.Clear();
 
-            List<string> skiRunStringList = new List<string>();
-
-            // build the list to write to the text file line by line
+            // build out the StringBuilder object from the list of ski runs in CSV format
             foreach (var skiRun in skiRuns)
             {
-                skiRunString = skiRun.ID + "," + skiRun.Name + "," + skiRun.Vertical;
-                skiRunStringList.Add(skiRunString);
+                sb.AppendLine(skiRun.ID + "," + skiRun.Name + "," + skiRun.Vertical);
             }
 
-            // initialize a FileStream object for writing
-            FileStream wfileStream = File.OpenWrite(DataSettings.dataFilePath);
+            // convert the StringBuilder object to a string
+            csvText = sb.ToString();
 
-            // wrap the FieldStream object in a using statement to ensure of the dispose
-            using (wfileStream)
+            // write the CSV formated string to a file
+            using (StreamWriter streamWriter = new StreamWriter(dataFilePath))
             {
-                // wrap the FileStream object in a StreamWriter object to simplify writing strings
-                StreamWriter sWriter = new StreamWriter(wfileStream);
-
-                // write each line to the data file
-                foreach (string skiRun in skiRunStringList)
-                {
-                    sWriter.WriteLine(skiRun);
-                }
-
-                // be sure to close the StreamWriter object
-                sWriter.Close();
+                streamWriter.Write(csvText);
             }
         }
     }

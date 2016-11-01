@@ -73,9 +73,9 @@
     <None Include="Data\Data.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <Content Include="Data\Data.txt">
+    <None Include="Data\Data.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    </None>
     <Content Include="Data\Data.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

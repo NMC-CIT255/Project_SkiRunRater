@@ -31,12 +31,13 @@ namespace SkiRunRater
         /// <param name="dataFilePath">path to the data file</param>
         public static void WriteAllSkiRuns(List<SkiRun> skiRuns, string dataFilePath)
         {
-            //string jsonObject = JsonConvert.SerializeObject(new { SkiRuns = skiRuns }, Formatting.Indented);
-            string jsonObject = JsonConvert.SerializeObject(skiRuns, Formatting.Indented);
+            // serialize and format the list of ski runs as string in JSON format
+            string jsonText = JsonConvert.SerializeObject(skiRuns, Formatting.Indented);
 
+            // write the JSON formated string to a file
             using (StreamWriter sWriter = new StreamWriter(dataFilePath))
             {
-                sWriter.Write(jsonObject);
+                sWriter.Write(jsonText);
             }            
         }
     }

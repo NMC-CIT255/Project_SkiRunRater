@@ -26,20 +26,20 @@ namespace SkiRunRater
         /// <returns>list of SkiRun objects</returns>
         public List<SkiRun> ReadSkiRunsData(string dataFilePath)
         {
-            string jsonObject;
+            string jsonText;
             List<SkiRun> skiRuns = new List<SkiRun>();
 
             // initialize a FileStream object for reading
             StreamReader sReader = new StreamReader(DataSettings.dataFilePath);
             
-            // read all of the json text file into a json string
+            // read all of the JSON text file into a json string
             using (sReader)
             {
-                jsonObject = sReader.ReadToEnd();
+                jsonText = sReader.ReadToEnd();
             }
 
             // deserialize the json string into a list of ski runs
-            skiRuns = JsonConvert.DeserializeObject<List<SkiRun>>(jsonObject);
+            skiRuns = JsonConvert.DeserializeObject<List<SkiRun>>(jsonText);
 
             return skiRuns;
         }
@@ -49,15 +49,15 @@ namespace SkiRunRater
         /// </summary>
         public void WriteSkiRunsData()
         {
-            // initialize a FileStream object for reading
+            // initialize a StreamWriter object for reading
             StreamWriter sWriter = new StreamWriter(DataSettings.dataFilePath, false);
 
             // generate json string from list of ski runs
-            string jsonObject = JsonConvert.SerializeObject(new { SkiRuns = _skiRuns }, Formatting.Indented);
+            string jsonText = JsonConvert.SerializeObject(_skiRuns, Formatting.Indented);
 
             using (sWriter)
             {
-                sWriter.Write(jsonObject);
+                sWriter.Write(jsonText);
             }
         }
 

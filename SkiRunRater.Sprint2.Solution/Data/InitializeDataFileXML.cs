@@ -31,18 +31,19 @@ namespace SkiRunRater
         /// <param name="dataFilePath">path to the data file</param>
         public static void WriteAllSkiRuns(List<SkiRun> skiRuns, string dataFilePath)
         {
-            StringWriter strWriter = new StringWriter();
+            StringWriter sWriterObject = new StringWriter();
             XmlSerializer serializer = new XmlSerializer(typeof(List<SkiRun>), new XmlRootAttribute("SkiRuns"));
 
-            //StreamWriter sWriter = new StreamWriter(dataFilePath);
+            // serialize the list of ski runs to a StringWriter object in XML format
+            serializer.Serialize(sWriterObject, skiRuns);
 
-            serializer.Serialize(strWriter, skiRuns);
-
-            string xmlObject = strWriter.ToString();
+            // convert the StringWriter object to a string
+            string xmlText = sWriterObject.ToString();
             
+            // write the XML formated string to a file
             using (StreamWriter streamWriter = new StreamWriter(dataFilePath))
             {
-                streamWriter.Write(xmlObject);
+                streamWriter.Write(xmlText);
             }
         }
     }
