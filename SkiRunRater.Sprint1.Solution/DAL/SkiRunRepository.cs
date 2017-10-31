@@ -165,13 +165,18 @@ namespace SkiRunRater
         {
             List<SkiRun> matchingSkiRuns = new List<SkiRun>();
 
-            foreach (var skiRun in _skiRuns)
-            {
-                if ((skiRun.Vertical >= minimumVertical) && (skiRun.Vertical <= maximumVertical))
-                {
-                    matchingSkiRuns.Add(skiRun);
-                }
-            }
+            //
+            // use a lambda expression with the Where method to query
+            //
+            matchingSkiRuns = _skiRuns.Where(sr => sr.Vertical >= minimumVertical && sr.Vertical <= maximumVertical).ToList();
+
+            //foreach (var skiRun in _skiRuns)
+            //{
+            //    if ((skiRun.Vertical >= minimumVertical) && (skiRun.Vertical <= maximumVertical))
+            //    {
+            //        matchingSkiRuns.Add(skiRun);
+            //    }
+            //}
 
             return matchingSkiRuns;
         }

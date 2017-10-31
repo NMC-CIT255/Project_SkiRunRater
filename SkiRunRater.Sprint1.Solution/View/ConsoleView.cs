@@ -150,6 +150,8 @@ namespace SkiRunRater
         /// <summary>
         /// method to get the user's choice of ski run id
         /// </summary>
+        /// <param name="skiRuns">list of all ski runs</param>
+        /// <returns>id of user selected ski run</returns>
         public static int GetSkiRunID(List<SkiRun> skiRuns)
         {
             int skiRunID = -1;
