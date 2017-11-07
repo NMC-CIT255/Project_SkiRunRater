@@ -95,7 +95,7 @@ namespace SkiRunRater
         /// <param name="ID"></param>
         public void DeleteSkiRun(int ID)
         {
-            _skiRuns.RemoveAt(GetSkiRunIndex(ID));
+            _skiRuns.RemoveAll(sr => sr.ID == ID);
 
             WriteSkiRunsData();
         }
@@ -121,7 +121,7 @@ namespace SkiRunRater
         {
             SkiRun skiRun = null;
 
-            skiRun = _skiRuns[GetSkiRunIndex(ID)];
+            skiRun = _skiRuns.FirstOrDefault(sr => sr.ID == ID);
 
             return skiRun;
         }
@@ -136,26 +136,6 @@ namespace SkiRunRater
         }
 
         /// <summary>
-        /// method to return the index of a given ski run
-        /// </summary>
-        /// <param name="skiRun"></param>
-        /// <returns>int ID</returns>
-        private int GetSkiRunIndex(int ID)
-        {
-            int skiRunIndex = 0;
-
-            for (int index = 0; index < _skiRuns.Count(); index++)
-            {
-                if (_skiRuns[index].ID == ID)
-                {
-                    skiRunIndex = index;
-                }
-            }
-
-            return skiRunIndex;
-        }
-
-                /// <summary>
         /// method to query the data by the vertical of each ski run in feet
         /// </summary>
         /// <param name="minimumVertical">int minimum vertical</param>
@@ -170,6 +150,9 @@ namespace SkiRunRater
             //
             matchingSkiRuns = _skiRuns.Where(sr => sr.Vertical >= minimumVertical && sr.Vertical <= maximumVertical).ToList();
 
+            //
+            // use a loop to query
+            //
             //foreach (var skiRun in _skiRuns)
             //{
             //    if ((skiRun.Vertical >= minimumVertical) && (skiRun.Vertical <= maximumVertical))

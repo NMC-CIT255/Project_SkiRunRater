@@ -79,31 +79,26 @@ namespace SkiRunRater
         }
 
         /// <summary>
-        /// method to add a new ski run
-        /// </summary>
-        /// <param name="skiRun"></param>
-        public void InsertSkiRun(SkiRun skiRun)
-        {
-            string skiRunString;
-
-            skiRunString = skiRun.ID + "," + skiRun.Name + "," + skiRun.Vertical;
-
-
-        }
-
-        /// <summary>
         /// method to delete a ski run by ski run ID
         /// </summary>
         /// <param name="ID"></param>
         public void DeleteSkiRun(int ID)
         {
-            for (int index = 0; index < _skiRuns.Count(); index++)
-            {
-                if (_skiRuns[index].ID == ID)
-                {
-                    _skiRuns.RemoveAt(index);
-                }
-            }
+            _skiRuns.RemoveAll(sr => sr.ID == ID);
+
+            WriteSkiRunsData();
+        }
+
+        /// <summary>
+        /// method to add a new ski run
+        /// </summary>
+        /// <param name="skiRun"></param>
+        public void InsertSkiRun(SkiRun skiRun)
+        {
+            //
+            // add the ski run to the list
+            //
+            // - your code here -
 
             WriteSkiRunsData();
         }
@@ -114,7 +109,12 @@ namespace SkiRunRater
         /// <param name="skiRun">ski run object</param>
         public void UpdateSkiRun(SkiRun skiRun)
         {
+            //
+            // update the ski run in the list
+            //
+            // - your code here -
 
+            WriteSkiRunsData();
         }
 
         /// <summary>

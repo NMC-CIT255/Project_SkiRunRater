@@ -55,7 +55,6 @@
     <Compile Include="Data\InitializeDataFileCSV.cs" />
     <Compile Include="Models\AppEnum.cs" />
     <Compile Include="Models\SkiRun.cs" />
-    <Compile Include="Models\SkiRuns.cs" />
     <Compile Include="Program.cs">
       <SubType>
       </SubType>

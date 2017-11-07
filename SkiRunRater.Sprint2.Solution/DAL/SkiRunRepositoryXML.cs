@@ -25,39 +25,28 @@ namespace SkiRunRater
         /// <returns>list of SkiRun objects</returns>
         public List<SkiRun> ReadSkiRunsData(string dataFilePath)
         {
-            SkiRuns skiRunsFromFile = new SkiRuns();
-
-            // initialize a FileStream object for reading
-            StreamReader sReader = new StreamReader(DataSettings.dataFilePath);
-
-            // initialize an XML seriailizer object
-            XmlSerializer deserializer = new XmlSerializer(typeof(SkiRuns));
-
-            using (sReader)
-            {
-                // deserialize the XML data set into a generic object
-                object xmlObject = deserializer.Deserialize(sReader);
-
-                // cast the generic object to the list class
-                skiRunsFromFile = (SkiRuns)xmlObject;
-            }
-
-            return skiRunsFromFile.skiRuns;
-        }
-
-        /// <summary>
-        /// method to write all of the list of ski runs to the text file
-        /// </summary>
-        public void WriteSkiRunsData()
-        {
-            // initialize a FileStream object for reading
-            StreamWriter sWriter = new StreamWriter(DataSettings.dataFilePath, false);
+            List<SkiRun> skiRuns;
 
             XmlSerializer serializer = new XmlSerializer(typeof(List<SkiRun>), new XmlRootAttribute("SkiRuns"));
 
-            using (sWriter)
+            using (FileStream stream = File.OpenRead(DataSettings.dataFilePath))
             {
-                serializer.Serialize(sWriter, _skiRuns);
+                skiRuns = (List<SkiRun>)serializer.Deserialize(stream);
+            }
+
+            return skiRuns;
+        }
+
+        /// <summary>
+        /// method to write all of the list of ski runs to the XML file
+        /// </summary>
+        public void WriteSkiRunsData()
+        {
+            XmlSerializer serializer = new XmlSerializer(typeof(List<SkiRun>), new XmlRootAttribute("SkiRuns"));
+
+            using (FileStream stream = File.OpenWrite(DataSettings.dataFilePath))
+            {
+                serializer.Serialize(stream, _skiRuns);
             }
         }
 
@@ -78,7 +67,7 @@ namespace SkiRunRater
         /// <param name="ID"></param>
         public void DeleteSkiRun(int ID)
         {
-            _skiRuns.RemoveAt(GetSkiRunIndex(ID));
+            _skiRuns.RemoveAll(sr => sr.ID == ID);
 
             WriteSkiRunsData();
         }
@@ -104,7 +93,7 @@ namespace SkiRunRater
         {
             SkiRun skiRun = null;
 
-            skiRun = _skiRuns[GetSkiRunIndex(ID)];
+            skiRun = _skiRuns.FirstOrDefault(sr => sr.ID == ID);
 
             return skiRun;
         }
@@ -119,26 +108,6 @@ namespace SkiRunRater
         }
 
         /// <summary>
-        /// method to return the index of a given ski run
-        /// </summary>
-        /// <param name="skiRun"></param>
-        /// <returns>int ID</returns>
-        private int GetSkiRunIndex(int ID)
-        {
-            int skiRunIndex = 0;
-
-            for (int index = 0; index < _skiRuns.Count(); index++)
-            {
-                if (_skiRuns[index].ID == ID)
-                {
-                    skiRunIndex = index;
-                }
-            }
-
-            return skiRunIndex;
-        }
-
-        /// <summary>
         /// method to query the data by the vertical of each ski run in feet
         /// </summary>
         /// <param name="minimumVertical">int minimum vertical</param>
@@ -148,13 +117,10 @@ namespace SkiRunRater
         {
             List<SkiRun> matchingSkiRuns = new List<SkiRun>();
 
-            foreach (var skiRun in _skiRuns)
-            {
-                if ((skiRun.Vertical >= minimumVertical) && (skiRun.Vertical <= maximumVertical))
-                {
-                    matchingSkiRuns.Add(skiRun);
-                }
-            }
+            //
+            // use a lambda expression with the Where method to query
+            //
+            matchingSkiRuns = _skiRuns.Where(sr => sr.Vertical >= minimumVertical && sr.Vertical <= maximumVertical).ToList();
 
             return matchingSkiRuns;
         }

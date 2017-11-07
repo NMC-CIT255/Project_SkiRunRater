@@ -37,9 +37,9 @@ namespace SkiRunRater
 
         private void ApplicationControl()
         {
-            SkiRunRepositoryCSV skiRunRepository = new SkiRunRepositoryCSV();
+            //SkiRunRepositoryCSV skiRunRepository = new SkiRunRepositoryCSV();
             //SkiRunRepositoryXML skiRunRepository = new SkiRunRepositoryXML();
-            //SkiRunRepositorJSON skiRunRepository = new SkiRunRepositorJSON();
+            SkiRunRepositorJSON skiRunRepository = new SkiRunRepositorJSON();
 
 
             ConsoleView.DisplayWelcomeScreen();
