@@ -4,11 +4,10 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Xml.Serialization;
 
 namespace SkiRunRater
 {
-    public class InitializeDataFileXML
+    public class InitializeDataFileCSV
     {
 
         public static void AddTestData()
@@ -31,13 +30,35 @@ namespace SkiRunRater
         /// <param name="dataFilePath">path to the data file</param>
         public static void WriteAllSkiRuns(List<SkiRun> skiRuns, string dataFilePath)
         {
-            XmlSerializer serializer = new XmlSerializer(typeof(List<SkiRun>), new XmlRootAttribute("SkiRuns"));
+            string skiRunString;
 
-            using (FileStream stream = File.OpenWrite(dataFilePath))
+            List<string> skiRunStringList = new List<string>();
+
+            // build the list to write to the text file line by line
+            foreach (var skiRun in skiRuns)
             {
-                serializer.Serialize(stream, skiRuns);
+                skiRunString = skiRun.ID + "," + skiRun.Name + "," + skiRun.Vertical;
+                skiRunStringList.Add(skiRunString);
+            }
+
+            // initialize a FileStream object for writing
+            FileStream wfileStream = File.OpenWrite(DataSettings.dataFilePath);
+
+            // wrap the FieldStream object in a using statement to ensure of the dispose
+            using (wfileStream)
+            {
+                // wrap the FileStream object in a StreamWriter object to simplify writing strings
+                StreamWriter sWriter = new StreamWriter(wfileStream);
+
+                // write each line to the data file
+                foreach (string skiRun in skiRunStringList)
+                {
+                    sWriter.WriteLine(skiRun);
+                }
+
+                // be sure to close the StreamWriter object
+                sWriter.Close();
             }
         }
     }
 }
-

@@ -33,10 +33,12 @@ namespace SkiRunRater
         {
             XmlSerializer serializer = new XmlSerializer(typeof(List<SkiRun>), new XmlRootAttribute("SkiRuns"));
 
-            using (FileStream stream = File.OpenWrite(dataFilePath))
+            StreamWriter sWriter = new StreamWriter(dataFilePath);
+
+            using (sWriter)
             {
-                serializer.Serialize(stream, skiRuns);
-            }
+                serializer.Serialize(sWriter, skiRuns);
+            }            
         }
     }
 }

@@ -123,8 +123,6 @@ namespace SkiRunRater
         public void InsertSkiRun(SkiRun skiRun)
         {
             fillRow(_skiRuns_dt, skiRun.ID, skiRun.Name, skiRun.Vertical);
-
-            WriteSkiRunsData();
         }
 
         /// <summary>
@@ -153,8 +151,6 @@ namespace SkiRunRater
             {
                 _skiRuns_dt.Rows.Remove(skiRuns[0]);
             }
-
-            WriteSkiRunsData();
         }
 
         /// <summary>
@@ -186,8 +182,6 @@ namespace SkiRunRater
                 skiRuns[0]["Name"] = skiRun.Name;
                 skiRuns[0]["Vertical"] = skiRun.Vertical;
             }
-
-            WriteSkiRunsData();
         }
 
         /// <summary>
@@ -248,6 +242,7 @@ namespace SkiRunRater
         /// </summary>
         public void Dispose()
         {
+            WriteSkiRunsData();
             _skiRuns_ds.Dispose();
         }
     }

@@ -29,7 +29,7 @@ namespace SkiRunRater
             string jsonText;
             List<SkiRun> skiRuns = new List<SkiRun>();
 
-            // initialize a FileStream object for reading
+            // initialize a StreamReader object for reading
             StreamReader sReader = new StreamReader(DataSettings.dataFilePath);
             
             // read all of the JSON text file into a json string

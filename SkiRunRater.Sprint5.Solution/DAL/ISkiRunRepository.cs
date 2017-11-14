@@ -15,6 +15,5 @@ namespace SkiRunRater
         void InsertSkiRun(SkiRun skiRun);
         void UpdateSkiRun(SkiRun skiRun);
         void DeleteSkiRun(int ID);
-
     }
 }

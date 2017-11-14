@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SkiRunRater.Sprint4.Solution.DAL
+namespace SkiRunRater
 {
     public interface ISkiRunRepository
     {

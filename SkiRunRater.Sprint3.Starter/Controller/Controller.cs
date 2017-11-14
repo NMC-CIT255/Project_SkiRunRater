@@ -37,16 +37,13 @@ namespace SkiRunRater
 
         private void ApplicationControl()
         {
-            //SkiRunRepositoryCSV skiRunRepository = new SkiRunRepositoryCSV();
-            SkiRunRepositoryXML skiRunRepository = new SkiRunRepositoryXML();
-            //SkiRunRepositorJSON skiRunRepository = new SkiRunRepositorJSON();
-
+            SkiRunRepositoryXML_DS skiRunRepository = new SkiRunRepositoryXML_DS();
 
             ConsoleView.DisplayWelcomeScreen();
 
             using (skiRunRepository)
             {
-                List<SkiRun> skiRuns = skiRunRepository.GetSkiAllRuns();
+                List<SkiRun> skiRuns = skiRunRepository.SelectAllRuns();
 
                 int skiRunID;
                 SkiRun skiRun;
@@ -64,6 +61,7 @@ namespace SkiRunRater
                             break;
 
                         case AppEnum.ManagerAction.ListAllSkiRuns:
+                            skiRuns = skiRunRepository.SelectAllRuns();
                             ConsoleView.DisplayAllSkiRuns(skiRuns);
 
                             ConsoleView.DisplayContinuePrompt();
@@ -71,7 +69,7 @@ namespace SkiRunRater
 
                         case AppEnum.ManagerAction.DisplaySkiRunDetail:
                             skiRunID = ConsoleView.GetSkiRunID(skiRuns);
-                            skiRun = skiRunRepository.GetSkiRunByID(skiRunID);
+                            skiRun = skiRunRepository.SelectByID(skiRunID);
 
                             ConsoleView.DisplaySkiRun(skiRun);
                             ConsoleView.DisplayContinuePrompt();
@@ -86,7 +84,7 @@ namespace SkiRunRater
 
                         case AppEnum.ManagerAction.UpdateSkiRun:
                             skiRunID = ConsoleView.GetSkiRunID(skiRuns);
-                            skiRun = skiRunRepository.GetSkiRunByID(skiRunID);
+                            skiRun = skiRunRepository.SelectByID(skiRunID);
 
                             skiRun = ConsoleView.UpdateSkiRun(skiRun);
 
