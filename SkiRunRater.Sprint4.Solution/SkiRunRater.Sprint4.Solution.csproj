@@ -41,15 +41,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BusinessLayer\SkiRunBusiness.cs" />
     <Compile Include="Controller\Controller.cs" />
     <Compile Include="DAL\ISkiRunRepository.cs" />
-    <Compile Include="DAL\SkiRunRepositoryCSV.cs" />
     <Compile Include="DAL\SkiRunRepositoryXML.cs" />
-    <Compile Include="DAL\SkiRunRepositoryXML_DS.cs" />
     <Compile Include="Data\DataSettings.cs" />
-    <Compile Include="Data\InitializeDataFileCSV.cs" />
     <Compile Include="Data\InitializeDataFileXML.cs" />
-    <Compile Include="Data\InitializeDataFileXML_DS.cs" />
     <Compile Include="Models\AppEnum.cs" />
     <Compile Include="Models\SkiRun.cs" />
     <Compile Include="Models\SkiRuns.cs" />

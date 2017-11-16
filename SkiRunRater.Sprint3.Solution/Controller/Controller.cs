@@ -103,7 +103,7 @@ namespace SkiRunRater
         private static void DisplaySkiRunDetail()
         {
             SkiRunRepositoryXML_DS skiRunRepository = new SkiRunRepositoryXML_DS();
-            List<SkiRun> skiRuns = skiRunRepository.SelectAllRuns();
+            List<SkiRun> skiRuns;
             SkiRun skiRun = new SkiRun();
             int skiRunID;
 
@@ -140,7 +140,7 @@ namespace SkiRunRater
         private static void UpdateSkiRun()
         {
             SkiRunRepositoryXML_DS skiRunRepository = new SkiRunRepositoryXML_DS();
-            List<SkiRun> skiRuns = skiRunRepository.SelectAllRuns();
+            List<SkiRun> skiRuns;
             SkiRun skiRun = new SkiRun();
             int skiRunID;
 
@@ -167,10 +167,15 @@ namespace SkiRunRater
         private static void DeleteSkiRun()
         {
             SkiRunRepositoryXML_DS skiRunRepository = new SkiRunRepositoryXML_DS();
-            List<SkiRun> skiRuns = skiRunRepository.SelectAllRuns();
+            List<SkiRun> skiRuns;
             SkiRun skiRun = new SkiRun();
             int skiRunID;
             string message;
+
+            using (skiRunRepository)
+            {
+                skiRuns = skiRunRepository.SelectAllRuns();
+            }
 
             skiRunID = ConsoleView.GetSkiRunID(skiRuns);
 

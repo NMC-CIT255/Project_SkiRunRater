@@ -9,10 +9,10 @@ namespace SkiRunRater
     public interface ISkiRunRepository
     {
             List<SkiRun> SelectAll();
-            SkiRun SelectByID(string id);
+            SkiRun SelectById(int id);
             void Insert(SkiRun obj);
             void Update(SkiRun obj);
-            void Delete(string id);
+            void Delete(int id);
             void Save();
     }
 }

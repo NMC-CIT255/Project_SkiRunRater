@@ -16,6 +16,7 @@ namespace SkiRunRater
         #region FIELDS
 
         bool active = true;
+        static ISkiRunRepository skiRunRepository;
 
         #endregion
 
@@ -28,6 +29,8 @@ namespace SkiRunRater
 
         public Controller()
         {
+            skiRunRepository = new SkiRunRepositoryXML();
+
             ApplicationControl();
         }
 
@@ -89,12 +92,12 @@ namespace SkiRunRater
 
         private static void ListAllSkiRuns()
         {
-            SkiRunRepositoryXML_DS skiRunRepository = new SkiRunRepositoryXML_DS();
-            List<SkiRun> skiRuns = skiRunRepository.SelectAllRuns();
+            SkiRunBusiness skiRunBusiness = new SkiRunBusiness(skiRunRepository);
+            List<SkiRun> skiRuns;
 
-            using (skiRunRepository)
+            using (skiRunBusiness)
             {
-                skiRuns = skiRunRepository.SelectAllRuns();
+                skiRuns = skiRunBusiness.SelectAll();
                 ConsoleView.DisplayAllSkiRuns(skiRuns);
                 ConsoleView.DisplayContinuePrompt();
             }
@@ -102,21 +105,17 @@ namespace SkiRunRater
 
         private static void DisplaySkiRunDetail()
         {
-            SkiRunRepositoryXML_DS skiRunRepository = new SkiRunRepositoryXML_DS();
-            List<SkiRun> skiRuns = skiRunRepository.SelectAllRuns();
-            SkiRun skiRun = new SkiRun();
+            SkiRunBusiness skiRunBusiness = new SkiRunBusiness(skiRunRepository);
+
+            List<SkiRun> skiRuns;
+            SkiRun skiRun;
             int skiRunID;
 
-            using (skiRunRepository)
+            using (skiRunBusiness)
             {
-                skiRuns = skiRunRepository.SelectAllRuns();
-            }
-
-            skiRunID = ConsoleView.GetSkiRunID(skiRuns);
-
-            using (skiRunRepository)
-            {
-                skiRun = skiRunRepository.SelectByID(skiRunID);
+                skiRuns = skiRunBusiness.SelectAll();
+                skiRunID = ConsoleView.GetSkiRunID(skiRuns);
+                skiRun = skiRunBusiness.SelectById(skiRunID);
             }
 
             ConsoleView.DisplaySkiRun(skiRun);
@@ -125,13 +124,14 @@ namespace SkiRunRater
 
         private static void AddSkiRun()
         {
-            SkiRunRepositoryXML_DS skiRunRepository = new SkiRunRepositoryXML_DS();
-            SkiRun skiRun = new SkiRun();
+            SkiRunBusiness skiRunBusiness = new SkiRunBusiness(skiRunRepository);
+
+            SkiRun skiRun;
 
             skiRun = ConsoleView.AddSkiRun();
-            using (skiRunRepository)
+            using (skiRunBusiness)
             {
-                skiRunRepository.InsertSkiRun(skiRun);
+                skiRunBusiness.Insert(skiRun);
             }
 
             ConsoleView.DisplayContinuePrompt();
@@ -139,49 +139,40 @@ namespace SkiRunRater
 
         private static void UpdateSkiRun()
         {
-            SkiRunRepositoryXML_DS skiRunRepository = new SkiRunRepositoryXML_DS();
-            List<SkiRun> skiRuns = skiRunRepository.SelectAllRuns();
-            SkiRun skiRun = new SkiRun();
+            SkiRunBusiness skiRunBusiness = new SkiRunBusiness(skiRunRepository);
+
+            List<SkiRun> skiRuns;
+            SkiRun skiRun;
             int skiRunID;
 
-            using (skiRunRepository)
+            using (skiRunBusiness)
             {
-                skiRuns = skiRunRepository.SelectAllRuns();
-            }
-
-            skiRunID = ConsoleView.GetSkiRunID(skiRuns);
-
-            using (skiRunRepository)
-            {
-                skiRun = skiRunRepository.SelectByID(skiRunID);
-            }
-
-            skiRun = ConsoleView.UpdateSkiRun(skiRun);
-
-            using (skiRunRepository)
-            {
-                skiRunRepository.UpdateSkiRun(skiRun);
+                skiRuns = skiRunBusiness.SelectAll();
+                skiRunID = ConsoleView.GetSkiRunID(skiRuns);
+                skiRun = skiRunBusiness.SelectById(skiRunID);
+                skiRun = ConsoleView.UpdateSkiRun(skiRun);
+                skiRunBusiness.Update(skiRun);
             }
         }
 
         private static void DeleteSkiRun()
         {
-            SkiRunRepositoryXML_DS skiRunRepository = new SkiRunRepositoryXML_DS();
-            List<SkiRun> skiRuns = skiRunRepository.SelectAllRuns();
-            SkiRun skiRun = new SkiRun();
+            SkiRunBusiness skiRunBusiness = new SkiRunBusiness(skiRunRepository);
+
+            List<SkiRun> skiRuns;
             int skiRunID;
             string message;
 
-            skiRunID = ConsoleView.GetSkiRunID(skiRuns);
-
-            using (skiRunRepository)
+            using (skiRunBusiness)
             {
-                skiRunRepository.DeleteSkiRun(skiRunID);
+                skiRuns = skiRunBusiness.SelectAll();
+                skiRunID = ConsoleView.GetSkiRunID(skiRuns);
+                skiRunBusiness.Delete(skiRunID);
             }
 
             ConsoleView.DisplayReset();
 
-            // TODO refactor
+            // TODO refactor to confirm
             message = String.Format("Ski Run ID: {0} had been deleted.", skiRunID);
 
             ConsoleView.DisplayMessage(message);
@@ -190,16 +181,17 @@ namespace SkiRunRater
 
         private static void QuerySkiRunsByVertical()
         {
-            SkiRunRepositoryXML_DS skiRunRepository = new SkiRunRepositoryXML_DS();
-            List<SkiRun> matchingSkiRuns = new List<SkiRun>();
+            SkiRunBusiness skiRunBusiness = new SkiRunBusiness(skiRunRepository);
+
+            List<SkiRun> matchingSkiRuns;
             int minimumVertical;
             int maximumVertical;
 
             ConsoleView.GetVerticalQueryMinMaxValues(out minimumVertical, out maximumVertical);
 
-            using (skiRunRepository)
+            using (skiRunBusiness)
             {
-                matchingSkiRuns = skiRunRepository.QueryByVertical(minimumVertical, maximumVertical);
+                matchingSkiRuns = skiRunBusiness.QueryByVertical(minimumVertical, maximumVertical);
             }
 
             ConsoleView.DisplayQueryResults(matchingSkiRuns);
