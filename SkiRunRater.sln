@@ -14,7 +14,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkiRunRater.Sprint3.Solutio
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkiRunRater.Sprint4.Solution", "SkiRunRater.Sprint4.Solution\SkiRunRater.Sprint4.Solution.csproj", "{FEFACD73-F8F8-4CA4-99D9-BA5D6339904D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkiRunRater.Sprint5.Solution", "SkiRunRater.Sprint5.Solution\SkiRunRater.Sprint5.Solution.csproj", "{14C5DE14-5344-4B9A-B2D7-80FA083B5DA4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkiRunRater.Sprint5.Solution.NOT", "SkiRunRater.Sprint5.Solution\SkiRunRater.Sprint5.Solution.NOT.csproj", "{14C5DE14-5344-4B9A-B2D7-80FA083B5DA4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{A5BEE8C3-BC8D-414B-8C0C-149F6F716F36}"
 	ProjectSection(SolutionItems) = preProject

@@ -1,65 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Data;
-using System.Text;
-using System.Threading.Tasks;
-using System.Data.Sql;
-using System.Data.SqlClient;
 using System.Configuration;
-using System.Configuration.Assemblies;
+using System.Data;
+using System.Data.SqlClient;
+using System.Linq;
+using System.Text;
 
 
 namespace SkiRunRater
 {
     public class SkiRunRepositorySQL : ISkiRunRepository
     {
-        private IList<SkiRun> _skiRuns = new List<SkiRun>();
+        private IEnumerable<SkiRun> _skiRuns = new List<SkiRun>();
 
         public SkiRunRepositorySQL()
         {
             _skiRuns = ReadAllSkiRuns();
         }
 
-        private IList<SkiRun> ReadAllSkiRuns()
+        private IEnumerable<SkiRun> ReadAllSkiRuns()
         {
             IList<SkiRun> skiRuns = new List<SkiRun>();
 
             string connString = GetConnectionString();
             string sqlCommandString = "SELECT * from SkiRuns";
-            //SqlConnection sqlConn = new SqlConnection(connString);
-            //SqlCommand sqlCommand = new SqlCommand(sqlCommandString, sqlConn);
-
-            //using (SqlConnection sqlConn = new SqlConnection(connString))
-            //{
-            //    try
-            //    {
-            //        sqlConn.Open();
-            //        using (sqlCommand)
-            //        {
-            //            using (SqlDataReader reader = sqlCommand.ExecuteReader())
-            //            {
-            //                if (reader != null)
-            //                {
-            //                    while (reader.Read())
-            //                    {
-            //                        SkiRun skiRun = new SkiRun();
-            //                        skiRun.ID = Convert.ToInt32(reader["ID"]);
-            //                        skiRun.Name = reader["Name"].ToString();
-            //                        skiRun.Vertical = Convert.ToInt32(reader["Vertical"]);
-            //                        skiRuns.Add(skiRun);
-            //                    }
-            //                }
-            //            }
-            //        }
-            //    }
-            //    catch (SqlException sqlEx)
-            //    {
-            //        Console.WriteLine("SQL Exception: {0}", sqlEx.Message);
-            //        Console.WriteLine(sqlCommandString);
-            //    }
-            //}
 
             using (SqlConnection sqlConn = new SqlConnection(connString))
             using (SqlCommand sqlCommand = new SqlCommand(sqlCommandString, sqlConn))
@@ -129,11 +93,9 @@ namespace SkiRunRater
             sb.Append("'").Append(skiRun.Name).Append("',");
             sb.Append("'").Append(skiRun.Vertical).Append("')");
             string sqlCommandString = sb.ToString();
-
-            SqlConnection sqlConn = new SqlConnection(connString);
-            SqlDataAdapter sqlAdapter = new SqlDataAdapter();
-
-            using (sqlConn)
+            
+            using (SqlConnection sqlConn = new SqlConnection(connString))
+            using (SqlDataAdapter sqlAdapter = new SqlDataAdapter())
             {
                 try
                 {
@@ -162,10 +124,8 @@ namespace SkiRunRater
             sb.Append(" WHERE ID = ").Append(ID);
             string sqlCommandString = sb.ToString();
 
-            SqlConnection sqlConn = new SqlConnection(connString);
-            SqlDataAdapter sqlAdapter = new SqlDataAdapter();
-
-            using (sqlConn)
+            using (SqlConnection sqlConn = new SqlConnection(connString))
+            using (SqlDataAdapter sqlAdapter = new SqlDataAdapter())
             {
                 try
                 {
@@ -197,10 +157,8 @@ namespace SkiRunRater
             sb.Append("ID = ").Append(skiRun.ID);
             string sqlCommandString = sb.ToString();
 
-            SqlConnection sqlConn = new SqlConnection(connString);
-            SqlDataAdapter sqlAdapter = new SqlDataAdapter();
-
-            using (sqlConn)
+            using (SqlConnection sqlConn = new SqlConnection(connString))
+            using (SqlDataAdapter sqlAdapter = new SqlDataAdapter())
             {
                 try
                 {

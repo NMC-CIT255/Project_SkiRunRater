@@ -17,7 +17,7 @@ Description:	Manage the data in the repository using a DataSet and DataTable
 				a unique method and implement the using block in each method
 
 Project:		Sprint 4
-Description:	Implement the IRepository
+Description:	Implement the IRepository and Business Layer
 
-Project:		Sprint 4
-Description:	SQL
+Project:		Sprint 5
+Description:	SQL database connection / add Business Layer to Starter
