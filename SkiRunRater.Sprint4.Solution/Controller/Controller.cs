@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SkiRunRater
 {
@@ -29,6 +26,10 @@ namespace SkiRunRater
 
         public Controller()
         {
+            //
+            // the skiRunRepository object can be instantiated with different 
+            // repositories based on different data sources
+            //
             skiRunRepository = new SkiRunRepositoryXML();
 
             ApplicationControl();

@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace SkiRunRater
 {
-    public class SkiRunBusiness : IDisposable
+    public class SkiRunBusiness : IDisposable, ISkiRunRepository
     {
         ISkiRunRepository _skiRunRepository;
 
@@ -49,6 +49,11 @@ namespace SkiRunRater
             List<SkiRun> skiRuns = _skiRunRepository.SelectAll();
                 
             return skiRuns.Where(sr => sr.Vertical >= minimumVertical && sr.Vertical <= maximumVertical).ToList();
+        }
+
+        public void Save()
+        {
+            _skiRunRepository.Save();
         }
 
         public void Dispose()
